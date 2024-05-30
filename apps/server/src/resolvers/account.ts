@@ -1,5 +1,5 @@
 import { Mutation, Query, Resolver, Arg } from "type-graphql";
-import Account from "../database/schemaDatabase";
+import Account from "../database/schemas/accountModel";
 import { typeAccount, typeAccountInput } from "../graphqlTypes/typesAccount";
 
 @Resolver()
