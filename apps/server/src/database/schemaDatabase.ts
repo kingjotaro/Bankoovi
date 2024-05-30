@@ -6,6 +6,5 @@ const accountSchema = new mongoose.Schema({
   password: String,
 });
 
-// Definição do modelo
 const Account = mongoose.model("Account", accountSchema);
 export default Account;

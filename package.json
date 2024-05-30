@@ -1,26 +1,24 @@
 {
-  "name": "Bankoovi",
+  "name": "dev-1",
   "private": true,
   "scripts": {
     "build": "turbo build",
+    "type": "module",
     "dev": "turbo dev",
     "lint": "turbo lint",
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@repo/eslint-config": "*",
-    "@repo/typescript-config": "*",
-    "@types/node": "^20.12.13",
-    "prettier": "^3.2.5",
-    "turbo": "latest",
-    "typescript": "^5.4.5"
+    "turbo": "^1.11.3"
   },
   "engines": {
     "node": ">=18"
   },
-  "packageManager": "npm@10.8.0",
+  "packageManager": "npm@10.2.5",
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+  }
 }
