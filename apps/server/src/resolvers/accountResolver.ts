@@ -6,7 +6,7 @@ import {
 } from "../graphqlTypes/typesAccountModel";
 
 @Resolver()
-export class accountResolver {
+export class AccountResolver {
   @Query(() => typeAccount)
   async ByAccountNumber(@Arg("AccountNumber") accountNumber: number) {
     let checkquery = await Account.findOne({
@@ -37,12 +37,7 @@ export class accountResolver {
         throw new Error("This account number is already taken");
       }
 
-      const { accountNumber, userId, balance } = newAccount;
-      const createdAccount = await Account.create({
-        accountNumber: accountNumber,
-        userId: userId,
-        balance: balance ?? 0,
-        // objectID vai aqui??
+      const createdAccount = await Account.create({...newAccount// objectID vai aqui??
       });
       return createdAccount;
     

@@ -31,12 +31,7 @@ export class UserResolver {
     if (checkUserId) {
       throw new Error("A user with this ID already has an User");
     }
-      const { name, taxId, password } = newUser;
-      const createdUser = await User.create({
-        name: name,
-        taxId: taxId,
-        password: password,
-      });
+      const createdUser = await User.create({...newUser});
       return createdUser;
     
   }
