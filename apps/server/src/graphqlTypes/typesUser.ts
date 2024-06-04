@@ -1,7 +1,7 @@
 import { Field, InputType, ObjectType } from 'type-graphql';
 //output
 @ObjectType()
-export class typeAccount {
+export class typeUser {
   @Field()
   _id: string;
 
@@ -17,7 +17,7 @@ export class typeAccount {
 }
 //input
 @InputType()
-export class typeAccountInput {
+export class typeUserInput {
   @Field()
   name: string;
 

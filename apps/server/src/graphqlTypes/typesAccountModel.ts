@@ -1,10 +1,10 @@
 import { ObjectType, Field, InputType, Float } from 'type-graphql';
 //output
 @ObjectType()
-export class Account {
+export class typeAccount {
   @Field()
   _id: string;
-
+  
   @Field()
   transaction_ID: string;
 //string serialization
@@ -22,7 +22,7 @@ export class Account {
 }
 //input
 @InputType()
-export class CreateAccountInput {
+export class typeAccountInput {
   @Field()
   accountNumber: number;
 

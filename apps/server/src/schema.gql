@@ -3,25 +3,31 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
 type Mutation {
-  createNewUser(createNewUser: typeAccountInput!): typeAccount!
-  editUser(editUser: typeAccountInput!): typeAccount!
-  removeUser(deleteUser: Float!): String!
+  ByNewAccount(NewAccount: typeAccountInput!): typeAccount!
 }
 
 type Query {
-  ByName(name: String!): typeAccount!
-  ByTaxId(taxId: Float!): typeAccount!
+  ByAccountNumber(AccountNumber: Float!): typeAccount!
+  ByUserId(UserId: String!): typeAccount!
 }
 
 type typeAccount {
-  name: String!
-  password: String!
-  taxId: Float!
+  _id: String!
+  balance: Float!
+  createdAt: DateTime!
+  transaction_ID: String!
+  updatedAt: DateTime!
+  userId: String!
 }
 
 input typeAccountInput {
-  name: String!
-  password: String!
-  taxId: Float!
+  accountNumber: Float!
+  balance: Float = 0
+  userId: String!
 }

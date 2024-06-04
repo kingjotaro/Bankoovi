@@ -3,7 +3,7 @@ import path from 'path';
 import { ApolloServer } from 'apollo-server';
 import { buildSchema } from 'type-graphql';
 import connectToMongoDB from './database/conectionDatabase';
-import { userResolvers } from './resolvers/account'; 
+import { accountResolver } from './resolvers/accountResolver'; 
 
 
 async function app() {
@@ -12,7 +12,7 @@ async function app() {
 
   // Crie o schema GraphQL
   const schema = await buildSchema({
-    resolvers: [userResolvers],
+    resolvers: [accountResolver],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
     validate: false,
   });
