@@ -3,6 +3,9 @@ import { Field, InputType, ObjectType } from 'type-graphql';
 @ObjectType()
 export class typeAccount {
   @Field()
+  _id: string;
+
+  @Field()
   name: string;
 
   @Field()
