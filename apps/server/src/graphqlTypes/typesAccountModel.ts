@@ -1,5 +1,5 @@
-import { ObjectType, Field, InputType, Float} from 'type-graphql';
-
+import { ObjectType, Field, InputType, Float } from "type-graphql";
+import Decimal from "../utils/decimal";
 
 //output
 @ObjectType()
@@ -9,12 +9,12 @@ export class typeAccount {
 
   @Field()
   transaction_ID: string;
-//string serialization
+  //string serialization
   @Field()
   userId: string;
 
-  @Field()
-  balance: number;
+  @Field(() => Decimal)
+  balance: typeof Decimal;
 
   @Field()
   createdAt: Date;
