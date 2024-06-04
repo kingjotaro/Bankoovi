@@ -25,6 +25,8 @@ async function app() {
   // Inicie o servidor na porta especificada ou na porta padrão (4000)
   const { url } = await server.listen();
   console.log(`Server running at ${url}`);
+
+  
 }
 
 // Chame a função app para iniciar o servidor

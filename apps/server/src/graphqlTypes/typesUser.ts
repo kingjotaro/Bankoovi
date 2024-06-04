@@ -7,6 +7,7 @@ export class typeAccount {
 
   @Field()
   taxId: number;
+  
 
   @Field()
   password: string;

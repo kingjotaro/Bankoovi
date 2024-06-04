@@ -1,12 +1,12 @@
 import { Mutation, Query, Resolver, Arg } from "type-graphql";
-import Account from "../database/schemas/accountModel";
-import { typeAccount, typeAccountInput } from "../graphqlTypes/typesAccount";
+import User from "../database/schemas/userModel";
+import { typeAccount, typeAccountInput } from "../graphqlTypes/typesUser";
 
 @Resolver()
 export class userResolvers {
   @Query(() => typeAccount)
   async ByName(@Arg("name") name: string) {
-    let checkquery = await Account.findOne({ name: name });
+    let checkquery = await User.findOne({ name: name }).lean();
     if (checkquery) {
       return checkquery;
     } else throw new Error("Date not found");
@@ -14,7 +14,7 @@ export class userResolvers {
 
   @Query(() => typeAccount)
   async ByTaxId(@Arg("taxId") taxId: number) {
-    let checkquery = await Account.findOne({ taxId: taxId });
+    let checkquery = await User.findOne({ taxId: taxId }).lean();
     if (checkquery) {
       return checkquery;
     } else throw new Error("TaxId not found");
@@ -22,32 +22,32 @@ export class userResolvers {
 
   @Mutation(() => typeAccount)
   async createNewUser(@Arg("createNewUser") createNewUser: typeAccountInput) {
-    let checkcreate = await Account.findOne({ taxId: createNewUser.taxId });
+    let checkcreate = await User.findOne({ taxId: createNewUser.taxId });
     if (checkcreate) {
       throw new Error("User already exist, cannot create another");
     }
     const { name, taxId, password } = createNewUser;
-    return await Account.create({ name, taxId, password });
+    return await User.create({ name, taxId, password });
   }
 
   @Mutation(() => typeAccount)
   async editUser(@Arg("editUser") editUser: typeAccountInput) {
-    let editCheck = await Account.findOne({ editUser: editUser.taxId });
+    let editCheck = await User.findOne({ editUser: editUser.taxId });
     if (editCheck) {
       const { name, taxId, password } = editUser;
 
       const update = { name, taxId, password } 
 
-      return await Account.findOneAndUpdate({ taxId }, update, { new: true });
+      return await User.findOneAndUpdate({ taxId }, update, { new: true });
     }
     throw new Error(`User with CPF:${editUser.taxId} not found!!`);
   }
 
   @Mutation(() => String)
   async removeUser(@Arg("deleteUser") taxId: number) {
-    let checkremove = await Account.findOne({ taxId: taxId });
+    let checkremove = await User.findOne({ taxId: taxId });
     if (checkremove) {
-      await Account.deleteOne({ taxId: taxId });
+      await User.deleteOne({ taxId: taxId });
       return `User with CPF:${taxId} deleted`;
     }
     throw new Error(`User with CPF:${taxId} not found!!`);
