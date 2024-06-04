@@ -14,7 +14,7 @@ export class accountResolver {
     }).lean();
     if (checkquery) {
       return checkquery;
-    } else throw new Error("TaxId not found");
+    } else throw new Error("Account number not found");
   }
 
   @Query(() => typeAccount)
@@ -42,6 +42,7 @@ export class accountResolver {
         accountNumber: accountNumber,
         userId: userId,
         balance: balance ?? 0,
+        // objectID vai aqui??
       });
       return createdAccount;
     

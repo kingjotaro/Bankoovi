@@ -9,10 +9,12 @@ const accountSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    balance: { type: mongoose.Schema.Types.Decimal128, default: 0 },
+    balance: Number,/* { type: mongoose.Schema.Types.Decimal128, default: 0 }, */
   },
   { timestamps: true }
 );
+
+
 
 
 

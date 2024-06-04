@@ -1,17 +1,19 @@
-import { ObjectType, Field, InputType, Float } from 'type-graphql';
+import { ObjectType, Field, InputType, Float} from 'type-graphql';
+
+
 //output
 @ObjectType()
 export class typeAccount {
   @Field()
   _id: string;
-  
+
   @Field()
   transaction_ID: string;
 //string serialization
   @Field()
   userId: string;
 
-  @Field(() => Float)
+  @Field()
   balance: number;
 
   @Field()

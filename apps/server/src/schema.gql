@@ -10,11 +10,14 @@ scalar DateTime
 
 type Mutation {
   ByNewAccount(NewAccount: typeAccountInput!): typeAccount!
+  ByNewUser(NewUser: typeUserInput!): typeUser!
 }
 
 type Query {
   ByAccountNumber(AccountNumber: Float!): typeAccount!
+  ByObjectId(ObjectId: String!): typeUser!
   ByUserId(UserId: String!): typeAccount!
+  ByUserTaxId(UserTaxId: Float!): typeUser!
 }
 
 type typeAccount {
@@ -30,4 +33,17 @@ input typeAccountInput {
   accountNumber: Float!
   balance: Float = 0
   userId: String!
+}
+
+type typeUser {
+  _id: String!
+  name: String!
+  password: String!
+  taxId: Float!
+}
+
+input typeUserInput {
+  name: String!
+  password: String!
+  taxId: Float!
 }
