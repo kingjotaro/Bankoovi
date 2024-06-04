@@ -1,31 +1,29 @@
-
-///  I M P O R T
- // @ts-ignore | TS2339
-import Big from "big.js";
+import { Decimal128 } from "bson";
 import { GraphQLScalarType, Kind } from "graphql";
 
-
-
-///  E X P O R T
-
-export default new GraphQLScalarType({
+const Decimal = new GraphQLScalarType({
   name: "Decimal",
-  description: "The `Decimal` scalar type to represent currency values",
+  description: "The `Decimal` scalar type to represent currency values using Decimal128",
 
   serialize(value) {
-    return new Big(value);
+    
+    return value.toString();
+  },
+
+  parseValue(value) {
+  
+    return Decimal128.fromString(value);
   },
 
   parseLiteral(ast) {
     if (ast.kind !== Kind.STRING) {
-      // @ts-ignore | TS2339
-      throw new TypeError(`${String(ast.value)} is not a valid decimal value.`);
+        // @ts-ignore | TS2339
+      throw new TypeError(`${ast.value} is not a valid decimal value.`);
     }
-
-    return Big(ast.value);
+    return Decimal128.fromString(ast.value);
   },
-
-  parseValue(value) {
-    return Big(value);
-  }
 });
+
+export default Decimal;
+
+
