@@ -1,4 +1,4 @@
-import { Field, InputType, ObjectType } from 'type-graphql';
+import { Field, InputType, ObjectType } from "type-graphql";
 //output
 @ObjectType()
 export class typeUser {
@@ -10,7 +10,6 @@ export class typeUser {
 
   @Field()
   taxId: number;
-  
 
   @Field()
   password: string;

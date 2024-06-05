@@ -7,7 +7,6 @@ export class typeAccount {
   @Field()
   _id: string;
 
-
   //need change this name, same name as transactions 
   @Field()
   transaction_ID: string;
@@ -23,6 +22,9 @@ export class typeAccount {
 
   @Field()
   updatedAt: Date;
+
+  @Field()
+  token: string;
 }
 //input
 @InputType()
@@ -35,4 +37,6 @@ export class typeAccountInput {
 
   @Field(() => Float, { defaultValue: 0 })
   balance: number;
+
+  
 }

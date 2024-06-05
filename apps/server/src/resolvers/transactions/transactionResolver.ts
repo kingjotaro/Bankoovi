@@ -1,9 +1,9 @@
 import { Mutation, Query, Resolver, Arg } from "type-graphql";
-import Transaction from "../database/schemas/transactionModel";
+import Transaction from "../../database/schemas/transactionModel";
 import {
   typeTransaction,
   typeCreateTransaction,
-} from "../graphqlTypes/typesTransaction";
+} from "../../graphqlTypes/typesTransaction";
 
 @Resolver()
 export class TransactionResolver {
