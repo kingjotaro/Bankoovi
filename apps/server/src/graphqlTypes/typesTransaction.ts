@@ -1,4 +1,6 @@
 import { ObjectType, Field, InputType, Float } from "type-graphql";
+import Decimal from "../utils/decimal";
+
 //output
 @ObjectType()
 export class typeTransaction {
@@ -13,8 +15,8 @@ export class typeTransaction {
   @Field()
   receiverAccount: string;
 
-  @Field(() => Float)
-  amount: number;
+  @Field(() => Decimal)
+  amount: typeof Decimal;
 
   @Field()
   createdAt: Date;
