@@ -7,9 +7,6 @@ export class typeAccount {
   @Field()
   _id: string;
 
-  //need change this name, same name as transactions 
-  @Field()
-  transaction_ID: string;
   //string serialization
   @Field()
   userId: string;

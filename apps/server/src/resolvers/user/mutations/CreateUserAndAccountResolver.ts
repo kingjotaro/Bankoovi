@@ -8,9 +8,8 @@ import {
   typeAccount,
   typeAccountInput,
 } from "../../../graphqlTypes/typesAccount";
-import dotenv from "dotenv";
 
-dotenv.config();
+
 
 @Resolver()
 export class CreateUserAndAccountResolver {

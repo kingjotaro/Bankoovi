@@ -9,11 +9,14 @@ import { ApolloServer } from 'apollo-server-koa';
 import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import path from 'path';
 
 // Resolvers
 import { ByObjectIdResolver } from './resolvers/user/query/ByObjectIdResolver';
 import { ByUserTaxIdResolver } from './resolvers/user/query/ByUserTaxIdResolver';
-import path from 'path';
+import { CreateUserAndAccountResolver } from './resolvers/user/mutations/CreateUserAndAccountResolver';
+import { LoginResolver } from './resolvers/login/mutation/loginResolver';
+
 
 dotenv.config();
 
@@ -33,7 +36,7 @@ export const createApp = async () => {
   app.use(bodyParser());
 
   const graphqlSchema = await buildSchema({
-    resolvers: [ByObjectIdResolver, ByUserTaxIdResolver],
+    resolvers: [ByObjectIdResolver, ByUserTaxIdResolver, CreateUserAndAccountResolver, LoginResolver],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
     validate: false,
   });

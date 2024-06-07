@@ -3,13 +3,53 @@
 # !!!   DO NOT MODIFY THIS FILE BY YOURSELF   !!!
 # -----------------------------------------------
 
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+"""
+The `Decimal` scalar type to represent currency values using Decimal128
+"""
+scalar Decimal
+
+type LoginResponse {
+  token: String!
+}
+
+type Mutation {
+  createUserAndAccount(NewAccount: typeAccountInput!, NewUser: typeUserInput!): typeAccount!
+  login(password: String!, taxId: Float!): LoginResponse!
+}
+
 type Query {
   ByObjectId(ObjectId: String!): typeUser!
   ByUserTaxId(UserTaxId: Float!): typeUser!
 }
 
+type typeAccount {
+  _id: String!
+  balance: Decimal!
+  createdAt: DateTime!
+  token: String!
+  updatedAt: DateTime!
+  userId: String!
+}
+
+input typeAccountInput {
+  accountNumber: Float!
+  balance: Float = 0
+  userId: String!
+}
+
 type typeUser {
   _id: String!
+  name: String!
+  password: String!
+  taxId: Float!
+}
+
+input typeUserInput {
   name: String!
   password: String!
   taxId: Float!
