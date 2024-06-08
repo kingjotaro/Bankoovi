@@ -9,9 +9,13 @@ const accountSchema = new mongoose.Schema(
       ref: "User",
       required: true,
       unique: true,
-      // retornando null
     },
     balance: { type: mongoose.Schema.Types.Decimal128, default: 0 },
+    history: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Transaction"
+    }]
+
   },
   { timestamps: true }
 );

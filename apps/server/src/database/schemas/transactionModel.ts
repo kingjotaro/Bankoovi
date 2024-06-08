@@ -7,7 +7,6 @@ const transactionSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Account",
       required: true,
-      
     },
     receiverAccount: {
       type: mongoose.Schema.Types.ObjectId,
@@ -15,6 +14,7 @@ const transactionSchema = new mongoose.Schema(
       required: true,
     },
     amount: { type: mongoose.Schema.Types.Decimal128, required: true },
+    transactionType: { type: String, enum: ['credit', 'debit'], required: true },
   },
   { timestamps: true }
 );

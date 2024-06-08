@@ -7,7 +7,6 @@ export class typeAccount {
   @Field()
   _id: string;
 
-  //string serialization
   @Field()
   userId: string;
 
