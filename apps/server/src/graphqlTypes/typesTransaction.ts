@@ -1,45 +1,45 @@
-import { ObjectType, Field, InputType, Float } from "type-graphql";
-import Decimal from "../utils/decimal";
+import { ObjectType, Field, InputType } from "type-graphql";
 
-//output
+// output
 @ObjectType()
 export class typeTransaction {
   @Field()
   _id: string;
 
-  //string serialization
   @Field()
-  transaction_ID: string;
+  origin: string;
 
-  //string serialization
   @Field()
-  receiverAccount: string;
+  senderAccount: string; 
 
-  @Field(() => Decimal)
-  amount: typeof Decimal;
+  @Field()
+  receiverAccount: string; 
+
+  @Field()
+  amount: number;
 
   @Field()
   createdAt: Date;
 
   @Field()
   updatedAt: Date;
+
+  @Field()
+  type: string;
+
 }
-//input
+
+// input
 @InputType()
 export class typeCreateTransaction {
-  //string serialization
-  @Field()
-  transaction_ID: string;
 
- //string serialization
   @Field()
-  senderAccount: string;
+  senderAccount: string; 
 
-  //string serialization
   @Field()
-  receiverAccount: string;
+  receiverAccount: string; 
 
-  @Field(() => Float)
+  @Field()
   amount: number;
 
 }

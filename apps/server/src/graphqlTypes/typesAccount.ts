@@ -1,5 +1,4 @@
-import { ObjectType, Field, InputType, Float } from "type-graphql";
-import Decimal from "../utils/decimal";
+import { ObjectType, Field, InputType } from "type-graphql";
 
 //output
 @ObjectType()
@@ -10,8 +9,8 @@ export class typeAccount {
   @Field()
   userId: string;
 
-  @Field(() => Decimal)
-  balance: typeof Decimal;
+  @Field()
+  balance: number;
 
   @Field()
   createdAt: Date;
@@ -22,7 +21,8 @@ export class typeAccount {
   @Field()
   token: string;
 }
-//input
+
+//input 
 @InputType()
 export class typeAccountInput {
   @Field()
@@ -31,8 +31,7 @@ export class typeAccountInput {
   @Field()
   userId: string;
 
-  @Field(() => Float, { defaultValue: 0 })
+  @Field()
   balance: number;
 
-  
 }

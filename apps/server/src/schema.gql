@@ -8,16 +8,12 @@ The javascript `Date` as string. Type represents date and time as the ISO Date s
 """
 scalar DateTime
 
-"""
-The `Decimal` scalar type to represent currency values using Decimal128
-"""
-scalar Decimal
-
 type LoginResponse {
   token: String!
 }
 
 type Mutation {
+  createTransaction(createTransaction: typeCreateTransaction!): typeTransaction!
   createUserAndAccount(NewAccount: typeAccountInput!, NewUser: typeUserInput!): typeAccount!
   login(password: String!, taxId: Float!): LoginResponse!
 }
@@ -29,7 +25,7 @@ type Query {
 
 type typeAccount {
   _id: String!
-  balance: Decimal!
+  balance: Float!
   createdAt: DateTime!
   token: String!
   updatedAt: DateTime!
@@ -38,8 +34,25 @@ type typeAccount {
 
 input typeAccountInput {
   accountNumber: Float!
-  balance: Float = 0
+  balance: Float!
   userId: String!
+}
+
+input typeCreateTransaction {
+  amount: Float!
+  receiverAccount: String!
+  senderAccount: String!
+}
+
+type typeTransaction {
+  _id: String!
+  amount: Float!
+  createdAt: DateTime!
+  origin: String!
+  receiverAccount: String!
+  senderAccount: String!
+  type: String!
+  updatedAt: DateTime!
 }
 
 type typeUser {

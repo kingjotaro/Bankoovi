@@ -2,22 +2,27 @@ import mongoose from "mongoose";
 
 const transactionSchema = new mongoose.Schema(
   {
-    transaction_ID: { type: String, unique: true, required: true },
+    origin: {  type: mongoose.Types.ObjectId,
+        ref: "Account",
+        required: true,},
     senderAccount: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Account",
       required: true,
     },
     receiverAccount: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: mongoose.Types.ObjectId,
       ref: "Account",
       required: true,
     },
-    amount: { type: mongoose.Schema.Types.Decimal128, required: true },
-    transactionType: { type: String, enum: ['credit', 'debit'], required: true },
+    amount: { type: Number, required: true },
+    type: { type: String, enum: ["Debit", "Credit"], required: true}
+
+   
   },
-  { timestamps: true }
+  { timestamps: true } 
 );
 
 const Transaction = mongoose.model("Transaction", transactionSchema);
+
 export default Transaction;

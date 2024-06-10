@@ -12,6 +12,7 @@ import dotenv from 'dotenv';
 import path from 'path';
 
 // Resolvers
+import { TransactionResolver } from './resolvers/transactions/TransactionResolver';
 import { ByObjectIdResolver } from './resolvers/user/query/ByObjectIdResolver';
 import { ByUserTaxIdResolver } from './resolvers/user/query/ByUserTaxIdResolver';
 import { CreateUserAndAccountResolver } from './resolvers/user/mutations/CreateUserAndAccountResolver';
@@ -36,7 +37,7 @@ export const createApp = async () => {
   app.use(bodyParser());
 
   const graphqlSchema = await buildSchema({
-    resolvers: [ByObjectIdResolver, ByUserTaxIdResolver, CreateUserAndAccountResolver, LoginResolver],
+    resolvers: [ByObjectIdResolver, ByUserTaxIdResolver, CreateUserAndAccountResolver, LoginResolver, TransactionResolver],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
     validate: false,
   });
