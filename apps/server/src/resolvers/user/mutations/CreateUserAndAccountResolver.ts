@@ -2,11 +2,11 @@ import { Mutation, Resolver, Arg } from "type-graphql";
 import mongoose from "mongoose";
 import { typeUserInput } from "../../../graphqlTypes/typesUser";
 import { typeAccount, typeAccountInput } from "../../../graphqlTypes/typesAccount";
-import { createUser } from "../../../utils/createUser"
-import { createAccount } from "../../../utils/createAccount";
-import { verifyUser } from "../../../utils/verifyUser";
-import { verifyAccount } from "../../../utils/verifyAccount";
-import { generateToken } from "../../../utils/generateJWT";
+import { createUser } from "../createUser"
+import { createAccount } from "../createAccount";
+import { verifyIfUserExist } from "../../../utils/resolvers/verifyIfUserExist";
+import {verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountExist";
+import { generateToken } from "../../../utils/auth/generateJWT";
 
 @Resolver()
 export class CreateUserAndAccountResolver {
@@ -19,8 +19,8 @@ export class CreateUserAndAccountResolver {
     session.startTransaction();
 
     try {
-      await verifyUser(newUser)
-      await verifyAccount(newAccount)
+      await verifyIfUserExist(newUser.taxId)
+      await verifyIfAccountExist(newAccount.accountNumber)
       
       const createdUser = await createUser(newUser, session);
       const createdAccount = await createAccount(newAccount, createdUser.id, session);

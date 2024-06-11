@@ -3,6 +3,7 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 import { typeCreateTransaction, typeTransaction } from "../../graphqlTypes/typesTransaction";
 import Transaction from "../../database/schemas/transactionModel";
 import Account from "../../database/schemas/accountModel";
+import {returnAccountData} from '../../utils/resolvers/returnAccountData'
 
 @Resolver()
 export class TransactionResolver {
@@ -13,31 +14,47 @@ export class TransactionResolver {
     const session = await mongoose.startSession();
     session.startTransaction();
 
+
+  
+      const senderAccount = await returnAccountData(createTransaction.senderAccount)
+      const receiverAccount = await returnAccountData(createTransaction.receiverAccount)
+
+      const senderID = senderAccount._id.toString();
+      const receiverID = receiverAccount._id.toString();
+
+      
+
     try {
       const transactionSender = new Transaction({
-        origin: createTransaction.senderAccount,
-        senderAccount: createTransaction.senderAccount,
-        receiverAccount: createTransaction.receiverAccount,
+        origin: senderID,
+        senderAccount: senderAccount?.accountNumber,
+        senderId: senderID,
+        receiverAccount: receiverAccount?.accountNumber,
+        receiverId: receiverID,
         amount: createTransaction.amount,
         createdAt: new Date(),
         type: "Debit"
       });
 
       const transactionReceiver = new Transaction({
-        origin: createTransaction.receiverAccount,
-        senderAccount: createTransaction.senderAccount,
-        receiverAccount: createTransaction.receiverAccount,
+        origin: receiverID,
+        senderAccount: senderAccount?.accountNumber,
+        senderId: senderID,
+        receiverAccount: receiverAccount?.accountNumber,
+        receiverId: receiverID,
         amount: createTransaction.amount,
         createdAt: new Date(),
         type: "Credit"
       });
 
+
+      //sender
       const savedTransactionSender = await transactionSender.save({ session });
+      // receiver
       const savedTransactionReceiver = await transactionReceiver.save({ session });
 
 
-      const senderAccount = await Account.findById(createTransaction.senderAccount).session(session);
-      const receiverAccount = await Account.findById(createTransaction.receiverAccount).session(session);
+      
 
       if (!senderAccount) {
         throw new Error("Conta remetente não encontrada");
@@ -52,13 +69,13 @@ export class TransactionResolver {
       
 
       await Account.updateOne(
-        { _id: createTransaction.senderAccount },
+        { _id: senderID},
         { $inc: { balance: -transactionSender.amount } },
         { session }
       );
 
       await Account.updateOne(
-        { _id: createTransaction.receiverAccount },
+        { _id: receiverID },
         { $inc: { balance: transactionSender.amount } },
         { session }
       );
@@ -67,7 +84,7 @@ export class TransactionResolver {
       session.endSession();
 
       
-      return savedTransactionSender.toObject(), savedTransactionReceiver.toObject();
+      return savedTransactionSender.toObject()
     } catch (error) {
       await session.abortTransaction();
       session.endSession();

@@ -25,6 +25,7 @@ type Query {
 
 type typeAccount {
   _id: String!
+  accountNumber: Float!
   balance: Float!
   createdAt: DateTime!
   token: String!
@@ -35,13 +36,12 @@ type typeAccount {
 input typeAccountInput {
   accountNumber: Float!
   balance: Float!
-  userId: String!
 }
 
 input typeCreateTransaction {
   amount: Float!
-  receiverAccount: String!
-  senderAccount: String!
+  receiverAccount: Float!
+  senderAccount: Float!
 }
 
 type typeTransaction {
@@ -49,8 +49,10 @@ type typeTransaction {
   amount: Float!
   createdAt: DateTime!
   origin: String!
-  receiverAccount: String!
-  senderAccount: String!
+  receiverAccount: Float!
+  receiverId: String!
+  senderAccount: Float!
+  senderId: String!
   type: String!
   updatedAt: DateTime!
 }

@@ -1,4 +1,3 @@
-// src/app.ts
 import connectToMongoDB from './database/conectionDatabase';
 import 'reflect-metadata';
 import Koa from 'koa';
@@ -10,14 +9,13 @@ import { buildSchema } from 'type-graphql';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
-
+import makeTransactions from './utils/scripts/scriptTransaction';
 // Resolvers
 import { TransactionResolver } from './resolvers/transactions/TransactionResolver';
 import { ByObjectIdResolver } from './resolvers/user/query/ByObjectIdResolver';
 import { ByUserTaxIdResolver } from './resolvers/user/query/ByUserTaxIdResolver';
 import { CreateUserAndAccountResolver } from './resolvers/user/mutations/CreateUserAndAccountResolver';
 import { LoginResolver } from './resolvers/login/mutation/loginResolver';
-
 
 dotenv.config();
 
@@ -49,6 +47,14 @@ export const createApp = async () => {
 
   await server.start();
   server.applyMiddleware({ app });
+
+  router.get('/start-transactions', async (ctx) => {
+    for (let i = 0; i < 5000; i++) {
+      const result = await makeTransactions();
+      console.log(`Request ${i + 1}:`, result);
+    }
+    ctx.body = 'All orders sent!!!';
+  });
 
   app.use(router.routes()).use(router.allowedMethods());
 

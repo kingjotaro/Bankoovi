@@ -6,6 +6,9 @@ export class typeAccount {
   @Field()
   _id: string;
 
+   @Field()
+  accountNumber: number;
+
   @Field()
   userId: string;
 
@@ -27,9 +30,6 @@ export class typeAccount {
 export class typeAccountInput {
   @Field()
   accountNumber: number;
-
-  @Field()
-  userId: string;
 
   @Field()
   balance: number;

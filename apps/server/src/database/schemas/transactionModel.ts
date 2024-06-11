@@ -5,12 +5,14 @@ const transactionSchema = new mongoose.Schema(
     origin: {  type: mongoose.Types.ObjectId,
         ref: "Account",
         required: true,},
-    senderAccount: {
+    senderAccount: {type: Number, required: true},
+    senderId: {
       type: mongoose.Types.ObjectId,
       ref: "Account",
       required: true,
     },
-    receiverAccount: {
+    receiverAccount: {type: Number, required: true},
+    receiverId: {
       type: mongoose.Types.ObjectId,
       ref: "Account",
       required: true,

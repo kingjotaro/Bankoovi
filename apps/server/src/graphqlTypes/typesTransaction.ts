@@ -10,10 +10,16 @@ export class typeTransaction {
   origin: string;
 
   @Field()
-  senderAccount: string; 
+  senderAccount: number; 
 
   @Field()
-  receiverAccount: string; 
+  receiverAccount: number; 
+
+  @Field()
+  senderId: string; 
+
+  @Field()
+  receiverId: string; 
 
   @Field()
   amount: number;
@@ -34,10 +40,10 @@ export class typeTransaction {
 export class typeCreateTransaction {
 
   @Field()
-  senderAccount: string; 
+  senderAccount: number; 
 
   @Field()
-  receiverAccount: string; 
+  receiverAccount: number; 
 
   @Field()
   amount: number;
