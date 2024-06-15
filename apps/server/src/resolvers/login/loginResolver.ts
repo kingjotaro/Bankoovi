@@ -1,8 +1,8 @@
 import { Resolver, Mutation, Arg } from "type-graphql";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
-import User from "../../../database/schemas/userModel";
-import { LoginResponse } from "../../../graphqlTypes/typesLogin";
+import User from "../../database/schemas/userModel";
+import { LoginResponse } from "../../graphqlTypes/typesLogin";
 import { error } from "console";
 
 

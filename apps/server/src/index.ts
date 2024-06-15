@@ -10,12 +10,13 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import path from 'path';
 import makeTransactions from './utils/scripts/scriptTransaction';
+
 // Resolvers
 import { TransactionResolver } from './resolvers/transactions/TransactionResolver';
 import { ByObjectIdResolver } from './resolvers/user/query/ByObjectIdResolver';
 import { ByUserTaxIdResolver } from './resolvers/user/query/ByUserTaxIdResolver';
 import { CreateUserAndAccountResolver } from './resolvers/user/mutations/CreateUserAndAccountResolver';
-import { LoginResolver } from './resolvers/login/mutation/loginResolver';
+import { LoginResolver } from './resolvers/login/loginResolver';
 
 dotenv.config();
 
@@ -35,14 +36,23 @@ export const createApp = async () => {
   app.use(bodyParser());
 
   const graphqlSchema = await buildSchema({
-    resolvers: [ByObjectIdResolver, ByUserTaxIdResolver, CreateUserAndAccountResolver, LoginResolver, TransactionResolver],
+    resolvers: [
+      ByObjectIdResolver, 
+      ByUserTaxIdResolver, 
+      CreateUserAndAccountResolver, 
+      LoginResolver, 
+      TransactionResolver
+    ],
     emitSchemaFile: path.resolve(__dirname, 'schema.gql'),
     validate: false,
   });
 
   const server = new ApolloServer({
     schema: graphqlSchema,
-    context: ({ ctx }) => ({ context: ctx.state.context }),
+    context: ({ ctx }) => ({
+      req: ctx.request,
+      res: ctx.response,
+    }),
   });
 
   await server.start();
