@@ -26,7 +26,8 @@
     "koa-router": "^12.0.1",
     "mongoose": "^6.12.9",
     "reflect-metadata": "^0.2.2",
-    "type-graphql": "^1.1.1"
+    "type-graphql": "^1.1.1",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",

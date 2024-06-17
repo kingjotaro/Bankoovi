@@ -38,7 +38,6 @@ export class typeTransaction {
 // input
 @InputType()
 export class typeCreateTransaction {
-
   @Field()
   senderAccount: number; 
 
