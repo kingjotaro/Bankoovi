@@ -8,6 +8,9 @@ import Transaction from "../../database/schemas/transactionModel";
 import Account from "../../database/schemas/accountModel";
 import { returnAccountData } from "../../utils/resolvers/returnAccountData";
 import { authenticateJWT } from "../../midleware/authenticate";
+import CustomError from "../../utils/errors/customError";
+
+
 
 @Resolver()
 export class TransactionResolver {
@@ -19,28 +22,24 @@ export class TransactionResolver {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const senderAccount = await returnAccountData(
-      createTransaction.senderAccount
-    );
+    const senderAccount = await returnAccountData(createTransaction.senderAccount);
     if (!senderAccount) {
       await session.abortTransaction();
       session.endSession();
-      throw new Error("Conta remetente não encontrada");
+      throw new CustomError("SenderAccountNotFound", "Sender account error");
     }
 
-    const receiverAccount = await returnAccountData(
-      createTransaction.receiverAccount
-    );
+    const receiverAccount = await returnAccountData(createTransaction.receiverAccount);
     if (!receiverAccount) {
       await session.abortTransaction();
       session.endSession();
-      throw new Error("Conta destinatária não encontrada");
+      throw new CustomError("ReceiverAccountNotFound", "Receiver Account not found!");
     }
 
     if (senderAccount.balance < createTransaction.amount) {
       await session.abortTransaction();
       session.endSession();
-      throw new Error("Saldo insuficiente");
+      throw new CustomError("InsufficientBalance", "Insufficiente Balance!");
     }
 
     const senderID = senderAccount._id.toString();
@@ -69,9 +68,7 @@ export class TransactionResolver {
     });
 
     const savedTransactionSender = await transactionSender.save({ session });
-    const savedTransactionReceiver = await transactionReceiver.save({
-      session,
-    });
+    const savedTransactionReceiver = await transactionReceiver.save({ session });
 
     await Account.updateOne(
       { _id: senderID },

@@ -3,13 +3,8 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/schemas/userModel";
 import { LoginResponse } from "../../graphqlTypes/typesLogin";
+import CustomError from "../../utils/errors/customError";
 
-class CustomError extends Error {
-  constructor(public name: string, public message: string) {
-    super(message);
-    this.name = name;
-  }
-}
 
 @Resolver()
 export class LoginResolver {

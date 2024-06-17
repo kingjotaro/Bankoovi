@@ -10,6 +10,7 @@ export default async function connectToMongoDB() {
     if (!mongoUri) {
       throw new Error("MONGO_URI is not defined in the .env file");
     }
+    mongoose.set('strictQuery', true)
     await mongoose.connect(mongoUri ,{serverSelectionTimeoutMS: 30000});
     console.log("Successfully connected to MongoDB");
 
