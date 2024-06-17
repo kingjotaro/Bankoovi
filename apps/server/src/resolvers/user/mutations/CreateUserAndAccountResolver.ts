@@ -1,11 +1,14 @@
 import { Mutation, Resolver, Arg } from "type-graphql";
 import mongoose from "mongoose";
 import { typeUserInput } from "../../../graphqlTypes/typesUser";
-import { typeAccount, typeAccountInput } from "../../../graphqlTypes/typesAccount";
-import { createUser } from "../createUser"
+import {
+  typeAccount,
+  typeAccountInput,
+} from "../../../graphqlTypes/typesAccount";
+import { createUser } from "../createUser";
 import { createAccount } from "../createAccount";
 import { verifyIfUserExist } from "../../../utils/resolvers/verifyIfUserExist";
-import {verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountExist";
+import { verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountExist";
 import { generateToken } from "../../../utils/auth/generateJWT";
 
 @Resolver()
@@ -18,23 +21,21 @@ export class CreateUserAndAccountResolver {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    try {
-      await verifyIfUserExist(newUser.taxId)
-      await verifyIfAccountExist(newAccount.accountNumber)
-      
-      const createdUser = await createUser(newUser, session);
-      const createdAccount = await createAccount(newAccount, createdUser.id, session);
+    await verifyIfUserExist(newUser.taxId);
+    await verifyIfAccountExist(newAccount.accountNumber);
 
-      const token = generateToken(createdUser.id);
+    const createdUser = await createUser(newUser, session);
+    const createdAccount = await createAccount(
+      newAccount,
+      createdUser.id,
+      session
+    );
 
-      await session.commitTransaction();
-      session.endSession();
+    const token = generateToken(createdUser.id);
 
-      return { ...createdAccount.toObject(), token };
-    } catch (error) {
-      await session.abortTransaction();
-      session.endSession();
-      throw error;
-    }
+    await session.commitTransaction();
+    session.endSession();
+
+    return { ...createdAccount.toObject(), token };
   }
 }

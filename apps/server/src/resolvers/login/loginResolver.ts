@@ -5,7 +5,6 @@ import User from "../../database/schemas/userModel";
 import { LoginResponse } from "../../graphqlTypes/typesLogin";
 import { error } from "console";
 
-
 @Resolver()
 export class LoginResolver {
   @Mutation(() => LoginResponse)
@@ -16,19 +15,19 @@ export class LoginResolver {
     const user = await User.findOne({ taxId });
 
     if (!user) {
-        throw error({
-            name: "UserNotFound",
-            message: "There is no user with this taxId.",
-          });
+      throw error({
+        name: "UserNotFound",
+        message: "There is no user with this taxId.",
+      });
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-        throw error({
-            name: "Invalid Password",
-            message: "You noob password",
-          });
+      throw error({
+        name: "Invalid Password",
+        message: "You noob password",
+      });
     }
 
     const secret = process.env.JWT_SECRET;

@@ -5,13 +5,9 @@ function verifyJWT(token: string) {
   if (!secret) {
     throw new Error("JWT_SECRET is not defined");
   }
-  try {
-    const decoded = jwt.verify(token, secret);
+  const decoded = jwt.verify(token, secret);
 
-    return decoded;
-  } catch (err) {
-    throw new Error("Token inválido/expirado");
-  }
-};
+  return decoded;
+}
 
 export { verifyJWT };
