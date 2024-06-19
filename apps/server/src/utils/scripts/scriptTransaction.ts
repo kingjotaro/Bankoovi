@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000/graphql';
 const headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjY4MDdjMjE0MjliYTIyYTY1ODc4ZTciLCJ0YXhJZCI6MTIzLCJpYXQiOjE3MTg3MzQxNzksImV4cCI6MTcxODczNzc3OX0.jZ-9x01KS7i28cA1Ci4XjJ3EUu6lvWaAXmByzyW2bzw'
+  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjY4MDdjMjE0MjliYTIyYTY1ODc4ZTciLCJ0YXhJZCI6MTIzLCJpYXQiOjE3MTg3OTIzMDAsImV4cCI6MTcxODc5NTkwMH0.TaLa66GZMmYgJBsokUAEvumTZpKgf2HaxuitEi3e2Yo'
 };
 
 const query = `
@@ -36,7 +36,7 @@ export async function makeTransactions() {
       variables: variables
     }, { headers: headers });
     return response.data;
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error:', error.response ? error.response.data : error.message);
     return null;
   }

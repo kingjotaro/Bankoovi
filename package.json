@@ -9,7 +9,6 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.8",
     "turbo": "^1.11.3"
   },
   "engines": {
@@ -17,10 +16,6 @@
   },
   "packageManager": "npm@10.2.5",
   "workspaces": [
-    "apps/*",
-    "packages/*"
-  ],
-  "dependencies": {
-    "jsonwebtoken": "^9.0.2"
-  }
+    "apps/*"   
+  ]
 }
