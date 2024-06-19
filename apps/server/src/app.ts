@@ -13,39 +13,50 @@ export const createApp = async () => {
   const app = new Koa();
   const router = new Router();
 
+  // Middleware setup
   app.use(cors());
   app.use(bodyParser());
 
+  // Build GraphQL schema
   const graphqlSchema = await buildSchema({
     resolvers,
     emitSchemaFile: path.resolve(__dirname, "schema.gql"),
     validate: false,
   });
 
+  // Initialize Apollo Server
   const server = new ApolloServer({
     schema: graphqlSchema,
     context: ({ ctx }) => ({
       req: ctx.request,
       res: ctx.response,
-    }),
-  });
-
+      user: ctx.state.user, 
+  })
+});
   await server.start();
   server.applyMiddleware({ app });
 
+  // Route to start transactions
   router.get("/start-transactions", async (ctx) => {
-    for (let i = 0; i < 5000; i++) {
-      const result = await makeTransactions();
-      console.log(`Request ${i + 1}:`, result);
+    try {
+      for (let i = 0; i < 2; i++) { // Adjust loop count as needed
+        const result = await makeTransactions(); // Call transaction function
+        console.log(`Request ${i + 1}:`, result); // Log result of each request
+      }
+      ctx.body = "All transactions initiated!"; // Respond to the request
+    } catch (error) {
+      console.error("Error starting transactions:", error);
+      ctx.status = 500;
+      ctx.body = "Failed to start transactions"; // Handle error response
     }
-    ctx.body = "All orders sent!!!";
   });
 
   app.use(router.routes()).use(router.allowedMethods());
 
-  connectToMongoDB();
+  // Connect to MongoDB
+  connectToMongoDB(); // Assuming this function handles MongoDB connection
 
-  return app;
+  return app; // Return configured Koa application
 };
 
 export default createApp;

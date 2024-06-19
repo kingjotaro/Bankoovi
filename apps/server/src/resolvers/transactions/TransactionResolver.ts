@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { Arg, Mutation, Resolver, UseMiddleware } from "type-graphql";
+import { Arg, Ctx, Mutation, Resolver, UseMiddleware } from "type-graphql";
 import {
   typeCreateTransaction,
   typeTransaction,
@@ -13,13 +13,19 @@ import { v4 as uuidv4 } from "uuid";
 
 
 
+
 @Resolver()
 export class TransactionResolver {
   @Mutation(() => typeTransaction)
   @UseMiddleware(authenticateJWT)
   async createTransaction(
-    @Arg("createTransaction") createTransaction: typeCreateTransaction
+    @Arg("createTransaction") createTransaction: typeCreateTransaction,
+    @Ctx() { user }: any 
   ): Promise<typeTransaction> {
+
+
+
+
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -52,6 +58,13 @@ export class TransactionResolver {
       throw new CustomError("InsufficientBalance", "Insufficiente Balance!");
     }
 
+    
+    if (user.userId !== senderAccount?.userId.toString()) {
+      await session.abortTransaction();
+      session.endSession();
+      throw new CustomError("Unauthorized", "You are not authorized to perform this action.");
+    }
+
     const senderID = senderAccount._id.toString();
     const receiverID = receiverAccount._id.toString();
 
@@ -78,6 +91,8 @@ export class TransactionResolver {
       createdAt: new Date(),
       type: "Credit",
     });
+
+  
 
     const savedTransactionSender = await transactionSender.save({ session });
     const savedTransactionReceiver = await transactionReceiver.save({ session });

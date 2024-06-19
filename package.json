@@ -9,6 +9,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
+    "@types/uuid": "^9.0.8",
     "turbo": "^1.11.3"
   },
   "engines": {

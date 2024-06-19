@@ -3,32 +3,33 @@ import axios from 'axios';
 const url = 'http://localhost:4000/graphql';
 const headers = {
   'Content-Type': 'application/json',
+  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjY4MDdjMjE0MjliYTIyYTY1ODc4ZTciLCJ0YXhJZCI6MTIzLCJpYXQiOjE3MTg3MzQxNzksImV4cCI6MTcxODczNzc3OX0.jZ-9x01KS7i28cA1Ci4XjJ3EUu6lvWaAXmByzyW2bzw'
 };
 
 const query = `
-mutation Mutation($createTransaction: typeCreateTransaction!) {
-  createTransaction(createTransaction: $createTransaction) {
-    _id
-    amount
-    createdAt
-    receiverAccount
-    senderAccount
-    type
-    updatedAt
-    origin
+  mutation CreateTransaction($createTransaction: typeCreateTransaction!) {
+    createTransaction(createTransaction: $createTransaction) {
+      origin
+      senderAccount
+      senderId
+      receiverAccount
+      receiverId
+      amount
+      createdAt
+      type
+    }
   }
-}
 `;
 
 const variables = {
-  'createTransaction': {
-    'amount': 1,
-    'receiverAccount': '66665971465963f92f6e7724',
-    'senderAccount': '66665982465963f92f6e772a'
+  createTransaction: {
+    amount: 1,
+    receiverAccount: 1234, 
+    senderAccount: 123
   }
 };
 
-export async function makeTransactions()  {
+export async function makeTransactions() {
   try {
     const response = await axios.post(url, {
       query: query,
@@ -36,9 +37,9 @@ export async function makeTransactions()  {
     }, { headers: headers });
     return response.data;
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error:', error.response ? error.response.data : error.message);
     return null;
   }
-};
+}
 
 export default makeTransactions;
