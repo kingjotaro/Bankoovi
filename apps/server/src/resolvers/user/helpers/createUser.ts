@@ -1,6 +1,6 @@
-import User from "../../database/schemas/userModel";
+import User from "../../../database/schemas/userModel";
 import bcrypt from "bcrypt";
-import { typeUserInput } from "../../graphqlTypes/typesUser";
+import { typeUserInput } from "../../../graphqlTypes/typesUser";
 import { ClientSession } from "mongoose";
 
 async function createUser(newUser: typeUserInput, session: ClientSession) {

@@ -10,17 +10,14 @@ export default async function connectToMongoDB() {
     if (!mongoUri) {
       throw new Error("MONGO_URI is not defined in the .env file");
     }
-    mongoose.set('strictQuery', true)
-    await mongoose.connect(mongoUri ,{serverSelectionTimeoutMS: 30000});
+
+    mongoose.set('strictQuery', true);
+
+    await mongoose.connect(mongoUri, { serverSelectionTimeoutMS: 30000 });
     console.log("Successfully connected to MongoDB");
 
-    await User.ensureIndexes((err) => {
-      if (err) {
-        console.error('Error creating indexes:', err);
-      } else {
-        console.log('Indexes created successfully.');
-      }
-    });
+    await User.ensureIndexes();
+    console.log('Indexes created successfully.');
   } catch (err) {
     console.error("Error connecting to MongoDB:", err);
   }

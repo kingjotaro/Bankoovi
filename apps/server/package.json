@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "jest",
+    "test": "NODE_ENV=test jest --forceExit",
     "dev": "tsnd --respawn --transpile-only src/index.ts"
   },
   "keywords": [],

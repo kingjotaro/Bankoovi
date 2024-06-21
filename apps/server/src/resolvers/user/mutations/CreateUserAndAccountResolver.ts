@@ -5,8 +5,8 @@ import {
   typeAccount,
   typeAccountInput,
 } from "../../../graphqlTypes/typesAccount";
-import { createUser } from "../createUser";
-import { createAccount } from "../createAccount";
+import { createUser } from "../helpers/createUser";
+import { createAccount } from "../helpers/createAccount";
 import { verifyIfUserExist } from "../../../utils/resolvers/verifyIfUserExist";
 import { verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountExist";
 import { generateToken } from "../../../utils/auth/generateJWT";

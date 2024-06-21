@@ -1,5 +1,5 @@
-import Account from "../../database/schemas/accountModel";
-import { typeAccountInput } from "../../graphqlTypes/typesAccount";
+import Account from "../../../database/schemas/accountModel";
+import { typeAccountInput } from "../../../graphqlTypes/typesAccount";
 import { ClientSession } from "mongoose";
 
 async function createAccount(newAccount: typeAccountInput, userId: string, session: ClientSession) {
