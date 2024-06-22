@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ByObjectIdResolver } from '../query/ByObjectIdResolver';
+import { ByObjectIdResolver } from '../query/UserByObjectIdResolver';
 import connectToMongoDB from "../../../database/conectionDatabase";
 import mongoose from 'mongoose';
 
