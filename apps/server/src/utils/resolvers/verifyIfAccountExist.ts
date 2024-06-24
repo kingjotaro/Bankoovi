@@ -2,7 +2,7 @@ import Account from "../../database/schemas/accountModel";
 
 
 async function verifyIfAccountExist(findAccount: number) {
-  let checkAccountNumber = await Account.findOne({ accountNumber: findAccount,
+  const checkAccountNumber = await Account.findOne({ accountNumber: findAccount,
   });
   return checkAccountNumber ? true : false;
 }

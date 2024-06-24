@@ -2,7 +2,7 @@ import Account from "../../database/schemas/accountModel";
 
 
 async function returnAccountData(findAccount: number) {
-  let checkAccountNumber = await Account.findOne({ accountNumber: findAccount,
+  const checkAccountNumber = await Account.findOne({ accountNumber: findAccount,
   });
   if (checkAccountNumber) {
    return checkAccountNumber;

@@ -23,9 +23,9 @@ export class DeleteUserAndAccountResolver {
       throw new Error("User and Account do not exist.");
     }
 
-
-    await deleteUser(User._id, session);
     await deleteAccount(Account._id, session);
+    await deleteUser(User._id, session);
+  
 
     await session.commitTransaction();
     await session.endSession();
