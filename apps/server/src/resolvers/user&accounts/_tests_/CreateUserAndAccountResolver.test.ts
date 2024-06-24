@@ -9,6 +9,7 @@ import { verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountEx
 import { generateToken } from "../../../utils/auth/generateJWT";
 import { typeUserInput } from "../../../graphqlTypes/typesUser";
 import { typeAccountInput } from "../../../graphqlTypes/typesAccount";
+import After from './helpers/After'
 
 describe("CreateUserAndAccountResolver", () => {
   let resolver: CreateUserAndAccountResolver;
@@ -18,8 +19,8 @@ describe("CreateUserAndAccountResolver", () => {
   });
 
   afterAll(async () => {
-    await mongoose.connection.close();
-  });
+  await After();
+});
 
   beforeEach(() => {
     resolver = new CreateUserAndAccountResolver();
