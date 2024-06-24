@@ -15,6 +15,7 @@ type LoginResponse {
 type Mutation {
   createTransaction(createTransaction: typeCreateTransaction!): typeTransaction!
   createUserAndAccount(NewAccount: typeAccountInput!, NewUser: typeUserInput!): typeAccount!
+  deleteUserAndAccount(Account: typeDeleteAccount!, User: typeDeleteUser!): String!
   login(password: String!, taxId: Float!): LoginResponse!
 }
 
@@ -42,6 +43,16 @@ input typeCreateTransaction {
   amount: Float!
   receiverAccount: Float!
   senderAccount: Float!
+}
+
+input typeDeleteAccount {
+  _id: ID!
+  accountNumber: Float!
+}
+
+input typeDeleteUser {
+  _id: ID!
+  taxId: Float!
 }
 
 type typeTransaction {
