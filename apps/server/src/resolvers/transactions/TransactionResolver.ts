@@ -8,7 +8,6 @@ import Transaction from "../../database/schemas/transactionModel";
 import Account from "../../database/schemas/accountModel";
 import { returnAccountData } from "../../utils/resolvers/returnAccountData";
 import { authenticateJWT } from "../../midleware/authenticate";
-import CustomError from "../../utils/errors/customError";
 import { v4 as uuidv4 } from "uuid";
 
 
@@ -35,34 +34,34 @@ export class TransactionResolver {
     if (existingTransaction) {
       await session.abortTransaction();
       session.endSession();
-      throw new CustomError("DuplicateTransaction", "This transaction has already been processed.");
+      throw new Error("This transaction has already been processed.");
     }
 
     const senderAccount = await returnAccountData(createTransaction.senderAccount);
     if (!senderAccount) {
       await session.abortTransaction();
       session.endSession();
-      throw new CustomError("SenderAccountNotFound", "Sender account error");
+      throw new Error("Sender account error");
     }
 
     const receiverAccount = await returnAccountData(createTransaction.receiverAccount);
     if (!receiverAccount) {
       await session.abortTransaction();
       session.endSession();
-      throw new CustomError("ReceiverAccountNotFound", "Receiver Account not found!");
+      throw new Error("Receiver Account not found!");
     }
 
     if (senderAccount.balance < createTransaction.amount) {
       await session.abortTransaction();
       session.endSession();
-      throw new CustomError("InsufficientBalance", "Insufficiente Balance!");
+      throw new Error("Insufficiente Balance!");
     }
 
     
     if (user.userId !== senderAccount?.userId.toString()) {
       await session.abortTransaction();
       session.endSession();
-      throw new CustomError("Unauthorized", "You are not authorized to perform this action.");
+      throw new Error("You are not authorized to perform this action.");
     }
 
     const senderID = senderAccount._id.toString();

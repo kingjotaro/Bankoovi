@@ -21,9 +21,13 @@ export class CreateUserAndAccountResolver {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    await verifyIfUserExist(newUser.taxId);
-    await verifyIfAccountExist(newAccount.accountNumber);
+    if (await verifyIfUserExist(newUser.taxId)) {
+      throw new Error("A user with this ID already has a User");
+    }
 
+    if (await verifyIfAccountExist(newAccount.accountNumber)) {
+      throw new Error("A user with this ID already has a User");
+    }
     const createdUser = await createUser(newUser, session);
     const createdAccount = await createAccount(
       newAccount,

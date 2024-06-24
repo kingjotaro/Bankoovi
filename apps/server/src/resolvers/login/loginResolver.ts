@@ -3,7 +3,6 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../../database/schemas/userModel";
 import { LoginResponse } from "../../graphqlTypes/typesLogin";
-import CustomError from "../../utils/errors/customError";
 
 
 @Resolver()
@@ -16,13 +15,13 @@ export class LoginResolver {
     const user = await User.findOne({ taxId });
 
     if (!user) {
-      throw new CustomError("UserNotFound", "There is no user with this taxId.");
+      throw new Error("There is no user with this taxId.");
     }
 
     const validPassword = await bcrypt.compare(password, user.password);
 
     if (!validPassword) {
-      throw new CustomError("InvalidPassword", "The password provided is invalid.");
+      throw new Error("The password provided is invalid.");
     }
 
     const secret = process.env.JWT_SECRET;
