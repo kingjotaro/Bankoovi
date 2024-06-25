@@ -1,29 +1,27 @@
 import "reflect-metadata";
 import mongoose from 'mongoose';
-import connectToMongoDB from "../../../database/conectionDatabase";
+import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
 import { CreateUserAndAccountResolver } from "../mutations/CreateUserAndAccountResolver";
-import { createUser } from "../helpers/createUser";
-import { createAccount } from "../helpers/createAccount";
-import { verifyIfUserExist } from "../../../utils/resolvers/verifyIfUserExist";
-import { verifyIfAccountExist } from "../../../utils/resolvers/verifyIfAccountExist";
-import { generateToken } from "../../../utils/auth/generateJWT";
 import { typeUserInput } from "../../../graphqlTypes/typesUser";
 import { typeAccountInput } from "../../../graphqlTypes/typesAccount";
-import After from './helpers/After'
+import dotenv from "dotenv";
+
+dotenv.config();
 
 describe("CreateUserAndAccountResolver", () => {
   let resolver: CreateUserAndAccountResolver;
 
   beforeAll(async () => {
-    await connectToMongoDB();
+    await connect();
   });
 
   afterAll(async () => {
-  await After();
-});
+    await closeDatabase();
+  });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     resolver = new CreateUserAndAccountResolver();
+    await clearDatabase();
   });
 
   it("should create a new user and account", async () => {
@@ -43,7 +41,7 @@ describe("CreateUserAndAccountResolver", () => {
     expect(result).toHaveProperty("accountNumber", newAccount.accountNumber);
     expect(result).toHaveProperty("balance", newAccount.balance);
     expect(result).toHaveProperty("token");
-  });
+  }, 10000); 
 
   it("should throw an error if user or account already exists", async () => {
     const existingUser: typeUserInput = {
@@ -57,8 +55,10 @@ describe("CreateUserAndAccountResolver", () => {
       balance: 500,
     };
 
+    await resolver.createUserAndAccount(existingUser, existingAccount);
+
     await expect(
       resolver.createUserAndAccount(existingUser, existingAccount)
     ).rejects.toThrow();
-  });
+  }, 10000);
 });
