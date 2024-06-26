@@ -19,7 +19,6 @@ describe("ByObjectIdResolver", () => {
   });
 
   it("should return a user when given a valid ObjectId", async () => {
-    // Primeiro, precisamos criar um usuário para testar
     const userData = {
       _id: new mongoose.Types.ObjectId("666807c21429ba22a65878e7"),
       name: "Test User",
