@@ -7,7 +7,7 @@ export const connect = async () => {
   mongoServer = await MongoMemoryReplSet.create({ replSet: { count: 3 } });
   const uri = mongoServer.getUri();
   
-  await mongoose.connect(uri, { dbName: "test", useNewUrlParser: true, useUnifiedTopology: true } as ConnectOptions);
+  await mongoose.connect(uri, { dbName: "test"} as ConnectOptions);
 }
 
 export const closeDatabase = async () => {

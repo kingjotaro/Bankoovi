@@ -1,5 +1,5 @@
 import 'reflect-metadata';
-import { ByUserTaxIdResolver } from '../query/UserByUserTaxIdResolver'; // Certifique-se de ajustar o caminho correto se necessário
+import { ByUserTaxIdResolver } from '../query/UserByUserTaxIdResolver';
 import connectToMongoDB from "../../../database/conectionDatabase";
 import mongoose from 'mongoose';
 import User from "../../../database/schemas/userModel";
