@@ -1,6 +1,8 @@
-import 'reflect-metadata';
-import { ByObjectIdResolver } from '../query/UserByObjectIdResolver';
+import "reflect-metadata";
+import { ByObjectIdResolver } from "../query/UserByObjectIdResolver";
 import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
+import mongoose from "mongoose";
+import User from "../../../database/schemas/userModel";
 
 describe("ByObjectIdResolver", () => {
   let resolver: ByObjectIdResolver;
@@ -22,14 +24,9 @@ describe("ByObjectIdResolver", () => {
     const userData = {
       _id: new mongoose.Types.ObjectId("666807c21429ba22a65878e7"),
       name: "Test User",
-      email: "testuser@example.com"
+      taxId: 123456789,
+      password: "password123",
     };
-
-    const User = mongoose.model('User', new mongoose.Schema({
-      _id: mongoose.Schema.Types.ObjectId,
-      name: String,
-      email: String
-    }));
 
     await User.create(userData);
 
@@ -42,6 +39,8 @@ describe("ByObjectIdResolver", () => {
   it("should throw an error when the user is not found", async () => {
     const invalidObjectId = new mongoose.Types.ObjectId();
 
-    await expect(resolver.ByObjectId(invalidObjectId.toString())).rejects.toThrow("Cast to ObjectId failed");
+    await expect(
+      resolver.ByObjectId(invalidObjectId.toString())
+    ).rejects.toThrow("UserId not found");
   });
 });
