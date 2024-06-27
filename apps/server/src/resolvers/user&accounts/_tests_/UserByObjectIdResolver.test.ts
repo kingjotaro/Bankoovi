@@ -1,11 +1,11 @@
 import "reflect-metadata";
-import { ByObjectIdResolver } from "../query/UserByObjectIdResolver";
+import { UserByObjectIdResolver } from "../query/UserByObjectIdResolver";
 import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
 import mongoose from "mongoose";
 import User from "../../../database/schemas/userModel";
 
-describe("ByObjectIdResolver", () => {
-  let resolver: ByObjectIdResolver;
+describe("UserByObjectIdResolver", () => {
+  let resolver: UserByObjectIdResolver;
 
   beforeAll(async () => {
     await connect();
@@ -16,7 +16,7 @@ describe("ByObjectIdResolver", () => {
   });
 
   beforeEach(async () => {
-    resolver = new ByObjectIdResolver();
+    resolver = new UserByObjectIdResolver();
     await clearDatabase();
   });
 
@@ -30,7 +30,7 @@ describe("ByObjectIdResolver", () => {
 
     await User.create(userData);
 
-    const userResponse = await resolver.ByObjectId("666807c21429ba22a65878e7");
+    const userResponse = await resolver.UserByObjectId("666807c21429ba22a65878e7");
 
     expect(userResponse).toHaveProperty("_id");
     expect(userResponse._id.toString()).toBe("666807c21429ba22a65878e7");
@@ -40,7 +40,7 @@ describe("ByObjectIdResolver", () => {
     const invalidObjectId = new mongoose.Types.ObjectId();
 
     await expect(
-      resolver.ByObjectId(invalidObjectId.toString())
+      resolver.UserByObjectId(invalidObjectId.toString())
     ).rejects.toThrow("UserId not found");
   });
 });

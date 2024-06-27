@@ -20,9 +20,9 @@ type Mutation {
 }
 
 type Query {
-  ByObjectId(ObjectId: String!): typeUser!
+  AccountByAccountNumber(accountNumber: Float!): typeAccount!
+  UserByObjectId(ObjectId: String!): typeUser!
   UserByUserTaxId(UserTaxId: Float!): typeUser!
-  accountByNumber(AccountNumber: Float!): String
 }
 
 type typeAccount {

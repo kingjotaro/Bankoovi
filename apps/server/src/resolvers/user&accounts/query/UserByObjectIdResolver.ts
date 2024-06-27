@@ -3,9 +3,9 @@ import User from "../../../database/schemas/userModel";
 import { typeUser } from "../../../graphqlTypes/typesUser";
 
 @Resolver()
-export class ByObjectIdResolver {
+export class UserByObjectIdResolver {
   @Query(() => typeUser)
-  async ByObjectId(@Arg("ObjectId") _id: string) {
+  async UserByObjectId(@Arg("ObjectId") _id: string) {
     const user = await User.findById(_id);
     if (user) {
       return user;
