@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { AccountByAccountNumberResolver } from "../query/AccountByAccountNumberResolver";
 import mongoose from "mongoose";
-import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
+import { connect, closeDatabase, clearDatabase } from "../../../utils/tests/dbHandler";
 import Account from "../../../database/schemas/accountModel";
 
 describe("AccountByAccountNumberResolver", () => {

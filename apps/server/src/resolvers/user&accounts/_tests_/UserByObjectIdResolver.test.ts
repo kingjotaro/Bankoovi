@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { UserByObjectIdResolver } from "../query/UserByObjectIdResolver";
-import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
+import { connect, closeDatabase, clearDatabase } from "../../../utils/tests/dbHandler";
 import mongoose from "mongoose";
 import User from "../../../database/schemas/userModel";
 

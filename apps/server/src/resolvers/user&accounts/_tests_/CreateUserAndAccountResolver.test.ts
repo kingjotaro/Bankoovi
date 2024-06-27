@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import mongoose from 'mongoose';
-import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
+import { connect, closeDatabase, clearDatabase } from "../../../utils/tests/dbHandler";
 import { CreateUserAndAccountResolver } from "../mutations/CreateUserAndAccountResolver";
 import { typeUserInput } from "../../../graphqlTypes/typesUser";
 import { typeAccountInput } from "../../../graphqlTypes/typesAccount";

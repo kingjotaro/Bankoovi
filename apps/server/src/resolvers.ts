@@ -3,7 +3,7 @@ import { UserByObjectIdResolver } from './resolvers/user&accounts/query/UserByOb
 import { UserByUserTaxIdResolver } from './resolvers/user&accounts/query/UserByUserTaxIdResolver';
 import { CreateUserAndAccountResolver } from './resolvers/user&accounts/mutations/CreateUserAndAccountResolver';
 import { DeleteUserAndAccountResolver } from './resolvers/user&accounts/mutations/DeleteUserAndAccountResolver';
-import { LoginResolver } from './resolvers/login/loginResolver';
+import { LoginResolver } from './resolvers/login/LoginResolver';
 import { AccountByAccountNumberResolver } from './resolvers/user&accounts/query/AccountByAccountNumberResolver';
 
 

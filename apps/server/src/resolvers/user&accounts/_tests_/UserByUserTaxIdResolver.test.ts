@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { UserByUserTaxIdResolver } from "../query/UserByUserTaxIdResolver";
 import mongoose from "mongoose";
-import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
+import { connect, closeDatabase, clearDatabase } from "../../../utils/tests/dbHandler";
 import User from "../../../database/schemas/userModel";
 
 describe("UserByUserTaxIdResolver", () => {
