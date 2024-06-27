@@ -1,8 +1,8 @@
-import { Field, InputType, ObjectType } from "type-graphql";
+import { Field, ID, InputType, ObjectType } from "type-graphql";
 //output
 @ObjectType()
 export class typeUser {
-  @Field()
+  @Field(() => ID)
   _id: string;
 
   @Field()

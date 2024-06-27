@@ -1,11 +1,11 @@
 import "reflect-metadata";
-import { ByUserTaxIdResolver } from "../query/UserByUserTaxIdResolver";
+import { UserByUserTaxIdResolver } from "../query/UserByUserTaxIdResolver";
 import mongoose from "mongoose";
 import { connect, closeDatabase, clearDatabase } from "./helpers/dbHandler";
 import User from "../../../database/schemas/userModel";
 
-describe("ByUserTaxIdResolver", () => {
-  let resolver: ByUserTaxIdResolver;
+describe("UserByUserTaxIdResolver", () => {
+  let resolver: UserByUserTaxIdResolver;
 
   beforeAll(async () => {
     await connect();
@@ -16,7 +16,7 @@ describe("ByUserTaxIdResolver", () => {
   });
 
   beforeEach(async () => {
-    resolver = new ByUserTaxIdResolver();
+    resolver = new UserByUserTaxIdResolver();
     await clearDatabase();
   });
 
@@ -32,7 +32,7 @@ describe("ByUserTaxIdResolver", () => {
 
     const validTaxId = 123456789;
 
-    const user = await resolver.ByUserTaxId(validTaxId);
+    const user = await resolver.UserByUserTaxId(validTaxId);
 
     expect(user).toHaveProperty("taxId", validTaxId);
     expect(user._id.toString()).toBe("666807c21429ba22a65878e7");
@@ -41,7 +41,7 @@ describe("ByUserTaxIdResolver", () => {
   it("should throw an error when the TaxId is not found", async () => {
     const invalidTaxId = 0;
 
-    await expect(resolver.ByUserTaxId(invalidTaxId)).rejects.toThrow(
+    await expect(resolver.UserByUserTaxId(invalidTaxId)).rejects.toThrow(
       "User Not Found!"
     );
   });

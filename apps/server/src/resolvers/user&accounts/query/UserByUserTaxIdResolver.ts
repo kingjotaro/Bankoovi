@@ -3,9 +3,9 @@ import User from "../../../database/schemas/userModel";
 import { typeUser } from "../../../graphqlTypes/typesUser";
 
 @Resolver()
-export class ByUserTaxIdResolver {
+export class UserByUserTaxIdResolver {
   @Query(() => typeUser)
-  async ByUserTaxId(@Arg("UserTaxId") TaxId: number) {
+  async UserByUserTaxId(@Arg("UserTaxId") TaxId: number) {
     const user = await User.findOne({ taxId: TaxId });
 
     if (!user) {

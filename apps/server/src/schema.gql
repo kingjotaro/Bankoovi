@@ -21,11 +21,12 @@ type Mutation {
 
 type Query {
   ByObjectId(ObjectId: String!): typeUser!
-  ByUserTaxId(UserTaxId: Float!): typeUser!
+  UserByUserTaxId(UserTaxId: Float!): typeUser!
+  accountByNumber(AccountNumber: Float!): String
 }
 
 type typeAccount {
-  _id: String!
+  _id: ID!
   accountNumber: Float!
   balance: Float!
   createdAt: DateTime!
@@ -56,7 +57,7 @@ input typeDeleteUser {
 }
 
 type typeTransaction {
-  _id: String!
+  _id: ID!
   amount: Float!
   createdAt: DateTime!
   origin: String!
@@ -69,7 +70,7 @@ type typeTransaction {
 }
 
 type typeUser {
-  _id: String!
+  _id: ID!
   name: String!
   password: String!
   taxId: Float!

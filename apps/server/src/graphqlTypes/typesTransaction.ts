@@ -1,10 +1,11 @@
-import { ObjectType, Field, InputType } from "type-graphql";
+import { ObjectType, Field, InputType, ID } from "type-graphql";
 
 // output
 @ObjectType()
 export class typeTransaction {
-  @Field()
+  @Field(() => ID)
   _id: string;
+
 
   @Field()
   origin: string;

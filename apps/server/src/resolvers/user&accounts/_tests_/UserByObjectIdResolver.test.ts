@@ -30,10 +30,10 @@ describe("ByObjectIdResolver", () => {
 
     await User.create(userData);
 
-    const user = await resolver.ByObjectId("666807c21429ba22a65878e7");
+    const userResponse = await resolver.ByObjectId("666807c21429ba22a65878e7");
 
-    expect(user).toHaveProperty("_id");
-    expect(user._id.toString()).toBe("666807c21429ba22a65878e7");
+    expect(userResponse).toHaveProperty("_id");
+    expect(userResponse._id.toString()).toBe("666807c21429ba22a65878e7");
   });
 
   it("should throw an error when the user is not found", async () => {
