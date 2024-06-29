@@ -6,7 +6,6 @@ export class typeTransaction {
   @Field(() => ID)
   _id: string;
 
-
   @Field()
   origin: string;
 

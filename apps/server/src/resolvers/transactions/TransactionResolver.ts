@@ -22,9 +22,6 @@ export class TransactionResolver {
     @Ctx() { user }: any 
   ): Promise<typeTransaction> {
 
-
-
-
     const session = await mongoose.startSession();
     session.startTransaction();
 
@@ -54,7 +51,7 @@ export class TransactionResolver {
     if (senderAccount.balance < createTransaction.amount) {
       await session.abortTransaction();
       session.endSession();
-      throw new Error("Insufficiente Balance!");
+      throw new Error("Insufficient Balance!");
     }
 
     
