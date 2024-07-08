@@ -8,7 +8,7 @@ import Transaction from "../../mongodb/schemas/transactionModel";
 import Account from "../../mongodb/schemas/accountModel";
 import returnAccountData from "../../utils/resolvers/returnAccountData";
 import { authenticateJWT } from "../../midleware/authenticate";
-import { v4 as uuidv4 } from "uuid";
+import getFormattedTimestamp from './helpers/getDate'
 
 
 @Resolver()
@@ -24,8 +24,34 @@ export class TransactionResolver {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    const transactionIdCredit = uuidv4();
-    const transactionIdDebit = uuidv4();
+    const senderAccount = await returnAccountData(createTransaction.senderAccount);
+    if (!senderAccount) {
+      await session.abortTransaction();
+      session.endSession();
+      throw new Error("Sender account error");
+    }
+
+    const receiverAccount = await returnAccountData(createTransaction.receiverAccount);
+    if (!receiverAccount) {
+      await session.abortTransaction();
+      session.endSession();
+      throw new Error("Receiver Account not found!");
+    }
+
+   
+       Buffer.from("a").toString('base64');
+   
+   
+
+    const transactionIdCredit = getFormattedTimestamp()+"/"+`${receiverAccount.userId}/${createTransaction.amount}`;
+    const transactionIdDebit = getFormattedTimestamp()+"/"+`${senderAccount.userId}/${createTransaction.amount}`;
+
+    console.log(transactionIdCredit)
+
+    const transactionIdCredit64 =  Buffer.from(transactionIdCredit).toString('base64');
+    const transactionIdDebit64 =  Buffer.from(transactionIdDebit).toString('base64');
+  
+    console.log(transactionIdCredit64)
 
     const existingTransactionCredit = await Transaction.findOne({ transactionId: transactionIdCredit });
     if (existingTransactionCredit) {
@@ -41,19 +67,7 @@ export class TransactionResolver {
       throw new Error("This transaction has already been processed Debit.");
     }
 
-    const senderAccount = await returnAccountData(createTransaction.senderAccount);
-    if (!senderAccount) {
-      await session.abortTransaction();
-      session.endSession();
-      throw new Error("Sender account error");
-    }
-
-    const receiverAccount = await returnAccountData(createTransaction.receiverAccount);
-    if (!receiverAccount) {
-      await session.abortTransaction();
-      session.endSession();
-      throw new Error("Receiver Account not found!");
-    }
+  
 
     if (senderAccount.balance < createTransaction.amount) {
       await session.abortTransaction();
@@ -72,26 +86,24 @@ export class TransactionResolver {
     const receiverID = receiverAccount._id.toString();
 
     const transactionSender = new Transaction({
-      transactionId: transactionIdDebit,
+      transactionId: transactionIdDebit64,
       origin: senderID,
       senderAccount: senderAccount?.accountNumber,
       senderId: senderID,
       receiverAccount: receiverAccount?.accountNumber,
       receiverId: receiverID,
       amount: createTransaction.amount,
-      createdAt: new Date(),
       type: "Debit",
     });
 
     const transactionReceiver = new Transaction({
-      transactionId: transactionIdCredit,
+      transactionId: transactionIdCredit64,
       origin: receiverID,
       senderAccount: senderAccount?.accountNumber,
       senderId: senderID,
       receiverAccount: receiverAccount?.accountNumber,
       receiverId: receiverID,
       amount: createTransaction.amount,
-      createdAt: new Date(),
       type: "Credit",
     });
 
