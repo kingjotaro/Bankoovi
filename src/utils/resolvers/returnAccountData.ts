@@ -7,7 +7,8 @@ export default async function returnAccountData(findAccount: number) {
   if (checkAccountNumber) {
    return checkAccountNumber;
   }
-  throw new Error("This account number not found data");
+
+  throw new Error(`This account number ${findAccount} not found data`);
 }
 
 ;
