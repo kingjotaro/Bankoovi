@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000/graphql';
 const headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njg0NjA5MDVmZDhmNDlhY2UyYmRkOTMiLCJ0YXhJZCI6MTIzNDU2LCJpYXQiOjE3MjAwNDM2NzEsImV4cCI6MTcyMDA0NzI3MX0.aipNltP47koan8QC7LPjXVP2gCag5GO0aWnX9vNE6FM'
+  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njg0NjA5MDVmZDhmNDlhY2UyYmRkOTMiLCJ0YXhJZCI6MTIzNDU2LCJpYXQiOjE3MjA1NTgxMjcsImV4cCI6MTcyMDU2MTcyN30.da4_zl6jnp-KfZYFzwerFqPOre7YLzOXs0SI4QIDRHE'
 };
 
 const query = `
@@ -23,8 +23,8 @@ const query = `
 
 const variables = {
   createTransaction: {
-    receiverAccount: 1337, 
-    senderAccount: 1338,
+    receiverAccount: 1338, 
+    senderAccount: 1337,
     amount: 1,
   }
 };

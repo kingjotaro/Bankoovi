@@ -11,25 +11,11 @@ import Transaction from "../../../mongodb/schemas/transactionModel";
 import { typeCreateTransaction } from "../../../graphqlTypes/typesTransaction";
 import dotenv from "dotenv";
 import jwt from "jsonwebtoken";
-
+import createKoaContext from '../../../utils/tests/koaHandler'
 
 dotenv.config();
 
-function generateToken(userId: string) {
-  return jwt.sign({ userId }, process.env.JWT_SECRET!, { expiresIn: "1h" });
-};
 
-function createKoaContext(userId: string) {
-  const token = generateToken(userId);
-  return {
-    request: {
-      header: {
-        authorization: `${token}`,
-      },
-    },
-    user: { userId },
-  };
-};
 
 describe("TransactionResolver", () => {
   let resolver: TransactionResolver;
@@ -76,8 +62,6 @@ describe("TransactionResolver", () => {
       amount: 1,
     };
     const result = await resolver.createTransaction(transactionInput, context);
-    console.log("Accounts after creation:", await Account.find());
-
     expect(result).toHaveProperty("transactionId");
     expect(result.senderAccount).toBe(123456);
     expect(result.receiverAccount).toBe(987654);
@@ -121,9 +105,7 @@ describe("TransactionResolver", () => {
       amount: 100,
     };
 
-    const context = {
-      user: { userId: user1Id.toString() },
-    };
+    const context = createKoaContext(user1Id.toString());
 
     await expect(
       resolver.createTransaction(transactionInput, context)
@@ -160,14 +142,11 @@ describe("TransactionResolver", () => {
       amount: 100,
     };
 
-    const context = {
-      user: { userId: anotherUserId.toString() },  
-    };
+    const context = createKoaContext("ctx to fail");
 
     await expect(
       resolver.createTransaction(transactionInput, context)
     ).rejects.toThrow("You are not authorized to perform this action.");
 
-    console.log("Accounts after creation:", await Account.find());
   });
 });

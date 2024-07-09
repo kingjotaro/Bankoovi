@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const transactionSchema = new mongoose.Schema(
   {
-    transactionId: { type: String, default: uuidv4, unique: true, required: true },
+    transactionId: { type: String, unique: true, required: true },
     origin: {  type: mongoose.Types.ObjectId,
         ref: "Account",
         required: true,},
