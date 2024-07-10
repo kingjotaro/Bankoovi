@@ -3,7 +3,7 @@ import axios from 'axios';
 const url = 'http://localhost:4000/graphql';
 const headers = {
   'Content-Type': 'application/json',
-  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njg0NjA5MDVmZDhmNDlhY2UyYmRkOTMiLCJ0YXhJZCI6MTIzNDU2LCJpYXQiOjE3MjA1NTgxMjcsImV4cCI6MTcyMDU2MTcyN30.da4_zl6jnp-KfZYFzwerFqPOre7YLzOXs0SI4QIDRHE'
+  'Authorization': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2Njg0NjA5MDVmZDhmNDlhY2UyYmRkOTMiLCJ0YXhJZCI6MTIzNDU2LCJpYXQiOjE3MjA1NjIyNjAsImV4cCI6MTcyMDU2NTg2MH0._ypyvsOHhyNXU-3GZxUAupbe3rZ4rwl-lhJkaCKL5r8'
 };
 
 const query = `

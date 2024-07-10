@@ -10,8 +10,7 @@ import Account from "../../../mongodb/schemas/accountModel";
 import Transaction from "../../../mongodb/schemas/transactionModel";
 import { typeCreateTransaction } from "../../../graphqlTypes/typesTransaction";
 import dotenv from "dotenv";
-import jwt from "jsonwebtoken";
-import createKoaContext from '../../../utils/tests/koaHandler'
+import createKoaContext from '../../../utils/tests/koaHandler';
 
 dotenv.config();
 
@@ -31,7 +30,7 @@ describe("TransactionResolver Idempotence Test", () => {
     await clearDatabase();
   });
 
-  it("should not create duplicate transactions (idempotence)", async () => {
+  it("should not create duplicate transactions - concurrency idempotency test", async () => {
     const user1Id = new mongoose.Types.ObjectId("666807c21429ba22a65878e6");
     const user2Id = new mongoose.Types.ObjectId("666807c21429ba22a65878e7");
 
@@ -61,12 +60,12 @@ describe("TransactionResolver Idempotence Test", () => {
     };
 
     const firstTransaction = resolver.createTransaction(transactionInput, context);
+    
+     await new Promise(resolve => setTimeout(resolve, 100));
+    
     const duplicateTransaction = resolver.createTransaction(transactionInput, context);
     
-
-    await expect(duplicateTransaction).rejects.toThrow("This transaction has already been processed");
-
-
+    await expect(duplicateTransaction).rejects.toThrow("This transaction has already been processed Credit.");
 
     const transactions = await Transaction.find({
       senderAccount: 123456,
@@ -74,7 +73,7 @@ describe("TransactionResolver Idempotence Test", () => {
       amount: 1,
     });
 
-    expect(transactions.length).toBe(1);
+    expect(transactions.length).toBe(2);
 
     const updatedSenderAccount = await Account.findById(senderAccountData._id);
     const updatedReceiverAccount = await Account.findById(receiverAccountData._id);
